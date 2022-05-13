@@ -19,12 +19,17 @@ import com.poc.calculator.utils.Constants;
 
 import io.swagger.annotations.ApiOperation;
 
+import io.corp.calculator.TracerImpl;
+
 @RestController
 public class OperationController {
 
+	private final TracerImpl tracerAPI;
+
 	private final OperationService operationService;
 
-	public OperationController(OperationService operationService) {
+	public OperationController(OperationService operationService, TracerImpl tracerAPI) {
+		this.tracerAPI = tracerAPI;
 		this.operationService = operationService;
 	}
 
@@ -37,6 +42,8 @@ public class OperationController {
 		OperationBO operationBO = OperationDto2OperationBoMapper.mapper.toOperationBO(operationDto,
 				Constants.OPERATION_ADDITION);
 		ResultResponse resultResponse = operationService.getAddition(operationBO);
+		tracerAPI.trace("The result of operation is: " + operationBO.getOperator1() + " + " + operationBO.getOperator2()
+				+ " = " + operationBO.getResult());
 
 		return new ResponseEntity<>(resultResponse, HttpStatus.OK);
 	}
@@ -50,6 +57,8 @@ public class OperationController {
 		OperationBO operationBO = OperationDto2OperationBoMapper.mapper.toOperationBO(operationDto,
 				Constants.OPERATION_SUBSTRACTION);
 		ResultResponse resultResponse = operationService.getSubstraction(operationBO);
+		tracerAPI.trace("The result of operation is: " + operationBO.getOperator1() + " - " + operationBO.getOperator2()
+				+ " = " + operationBO.getResult());
 
 		return new ResponseEntity<>(resultResponse, HttpStatus.OK);
 	}

@@ -34,7 +34,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -73,6 +72,14 @@
 			<version>${org.mapstruct.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>io.corp.calculator</groupId>
+			<artifactId>tracer</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/tracer-1.0.0.jar</systemPath>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -81,8 +88,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-				    <fork>true</fork>
-                    <mainClass>${start-class}</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
@@ -90,15 +95,8 @@
 						</exclude>
 					</excludes>
 				</configuration>
-				<executions>
-                    <execution>
-                      <goals>
-                        <goal>repackage</goal>
-                      </goals>
-                    </execution>
-                </executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

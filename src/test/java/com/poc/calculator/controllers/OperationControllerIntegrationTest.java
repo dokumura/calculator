@@ -16,10 +16,13 @@ import com.poc.calculator.dtos.OperationDto;
 import com.poc.calculator.services.OperationService;
 import com.poc.calculator.services.impl.OperationServiceImpl;
 
+import io.corp.calculator.TracerImpl;
+
 public class OperationControllerIntegrationTest {
 
 	private MockMvc mockMvc;
 	private OperationService operationService;
+	private TracerImpl tracerImpl;
 	private OperationDto operationDto;
 	private static final String CONTENT_TYPE = "application/json";
 
@@ -27,7 +30,8 @@ public class OperationControllerIntegrationTest {
 	void setUp() {
 		operationDto = new OperationDto(new BigDecimal(1), new BigDecimal(2));
 		operationService = new OperationServiceImpl();
-		this.mockMvc = MockMvcBuilders.standaloneSetup(new OperationController(operationService)).build();
+		tracerImpl = new TracerImpl();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(new OperationController(operationService, tracerImpl)).build();
 	}
 
 	@Test
